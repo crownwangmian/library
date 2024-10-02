@@ -30,11 +30,11 @@ class Book implements BookOperations {
     }
 
     public boolean search(String query) {
-        return title.contains(query);
+        return title.toLowerCase().contains("java".toLowerCase()); //Ignorera skiftläge
     }
 
-    public boolean search(double price) { //解决double所带来的失精的问题
-        double tolerance = 0.01;
+    public boolean search(double price) { //Lös problemet med förlust av noggrannhet orsakad av dubbel
+        double tolerance = 0.0001;
         return Math.abs(this.price - price) < tolerance;
 
     }

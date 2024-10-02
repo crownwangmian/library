@@ -14,32 +14,30 @@ public class Test {
         library.addBook(book1);
         library.addBook(ebook1);
 
-        String[] menu = {"1. Add Book", "2. Display All Books", "3. Sort Books by Price", "4. Sort Books by Title", "5. Search Book by Title", "6. Exit"};
+        String[] menu = {"1. Add Book", "2. Display All Books", "3. Sort Books by Price", "4. Sort Books by Title", "5. Search Book by Title or Price", "6. Exit"};
 
         System.out.println("welcome to IT school`s library");
 
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-            try {
-                Arrays.stream(menu).forEach(System.out::println);
-                System.out.println("give your choice");
-                String choiceStr = sc.nextLine();
+            Arrays.stream(menu).forEach(System.out::println);
+            String choiceStr = sc.nextLine();
+            if (choiceStr.matches("\\d+")) {  // sing regular expressions so avoid potential errors and skip using try catch
                 int choice = Integer.parseInt(choiceStr);
                 if (choice == 6) {
-                    System.out.println("welcome to use again");
+                    System.out.println("Welcome to use again.");
                     break;
                 }
-                menu(choice, library);
-            } catch (Exception e) {
+                menu(choice, library);  // create a Fun method to handle the menu choices
+            } else {
                 System.out.println("Invalid input, please enter a valid number.");
             }
         }
     }
 
+
     private static void menu(int choice, LibrarySystem library) {
-
-
         switch (choice) {
             case 1:
                 addBook(library);
@@ -47,7 +45,6 @@ public class Test {
                 break;
             case 2:
                 System.out.println("Displaying all books:");
-
                 library.displayAllBooks();
                 break;
             case 3:
@@ -121,13 +118,11 @@ public class Test {
     private static void searchBookByNameOrPrice(LibrarySystem library) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter book's name or price:");
-
         String input = sc.nextLine();
-
         try {
-            // 尝试将输入解析为 double
+            // if type is double
             double priceQuery = Double.parseDouble(input);
-            // 按价格搜索
+            // search books by price
             Book foundBook = library.linearSearch(priceQuery);  // 调用按价格搜索的方法
             if (foundBook != null) {
                 foundBook.displayDetails();
@@ -135,8 +130,8 @@ public class Test {
                 System.out.println("No book found with the given price.");
             }
         } catch (NumberFormatException e) {
-            // 如果解析失败，按书名搜索
-            Book foundBook = library.linearSearch(input);  // 调用按书名搜索的方法
+            // if not double, search by name
+            Book foundBook = library.linearSearch(input);  // Implement method overloading
             if (foundBook != null) {
                 foundBook.displayDetails();
             } else {

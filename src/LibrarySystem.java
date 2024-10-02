@@ -34,7 +34,7 @@ public class LibrarySystem {
         return null;
     }
 
-//    public void bubbleSortByPrice() {
+    //    public void bubbleSortByPrice() {
 //        int n = books.size();
 //        boolean swapped;
 //        for (int i = 0; i < n - 1; i++) {
@@ -51,40 +51,36 @@ public class LibrarySystem {
 //            }
 //        }
 //    }
-
+//The algorithm has been optimized. If the positions are not swapped,
+// it means that they are already arranged in order and there is no need to continue looping.
     public void bubbleSortByPrice() {
         int n = books.size();
         boolean swapped;
-        double epsilon = 0.0001;  // 定义容差范围，确保浮点数比较的精度
-
         for (int i = 0; i < n - 1; i++) {
             swapped = false;
             for (int j = 0; j < n - i - 1; j++) {
-                // 使用容差范围进行浮点数比较
                 if (compareDouble(books.get(j).price, books.get(j + 1).price) > 0) {
                     Collections.swap(books, j, j + 1);
-                    swapped = true;  // 发生交换
+                    swapped = true;
                 }
             }
-            // 如果没有发生交换，提前终止排序
             if (!swapped) {
                 break;
             }
         }
     }
 
-    // 自定义浮点数比较方法，使用 epsilon 来比较两个 double 值
+    // Custom method to avoid loss of precision in decimal operations
     private int compareDouble(double d1, double d2) {
-        double epsilon = 0.0001;  // 设置容差
+        double epsilon = 0.0001;
         if (Math.abs(d1 - d2) < epsilon) {
-            return 0;  // 两个值在容差范围内，认为相等
+            return 0;
         } else if (d1 > d2) {
-            return 1;  // d1 大于 d2
+            return 1;
         } else {
-            return -1;  // d1 小于 d2
+            return -1;
         }
     }
-
 
     public void selectionSortByTitle() {
         int n = books.size();
@@ -98,7 +94,6 @@ public class LibrarySystem {
             Collections.swap(books, i, minIndex);
         }
     }
-
     public static void main(String[] args) {
         LibrarySystem library = new LibrarySystem();
 
